@@ -43,6 +43,24 @@ class DepositAccount(name: String) extends Account(name: String){
     override val _accountType = "Deposit"
 }
 
+trait Balance {
+    private var _balance: Double = 0
+    def getBalance = _balance
+    def setBalance(newBalance: Double) = _balance = newBalance
+    override def toString(): String = s"Balance=${getBalance}"
+}
+
+trait AnualFees extends Balance {
+    override def setBalance(newBalance: Double): Unit = super.setBalance(newBalance - 100)
+}
+
+trait HighSavings extends Balance {
+    override def setBalance(newBalance: Double): Unit = super.setBalance((newBalance + 500) * (1 + 0.50))
+}
+
+class PremiumSavingAccount(name: String) extends DepositAccount(name) with AnualFees
+class PremiumPromotionalSavingAccount(name: String) extends DepositAccount(name) with AnualFees with HighSavings
+
 object AccountRunner extends App{
     val a1 = new OldAccount(UUID.randomUUID(), "Account 01", LocalDateTime.now)
     val a2 = new OldAccount(UUID.randomUUID(), "Account 02", LocalDateTime.now.plusHours(6))
@@ -57,4 +75,23 @@ object AccountRunner extends App{
     println(ca1)
     val da1: Account = new DepositAccount("Deposit Accout 01")
     println(da1)
+
+    println()
+    println()
+
+    val psb1 = new PremiumSavingAccount("Premium Saving Account")
+    psb1.setBalance(999)
+    println(psb1.getBalance)
+
+    val psb2 = new PremiumPromotionalSavingAccount("Premium Promotional Saving Account")
+    psb2.setBalance(999)
+    println(psb2.getBalance)
 }
+
+class C1
+class C2
+class C3
+
+trait T1
+trait T2
+trait T3
