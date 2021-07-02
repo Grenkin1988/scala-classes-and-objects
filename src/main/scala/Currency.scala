@@ -14,8 +14,14 @@ object Currency {
             case "USD" => amount
             case ccy if conversionTable.contains(ccy) =>
                 amount * conversionTable(ccy)
-            case _ => throw new IllegalArgumentException(s"No conversion available for ${_code}")
+            case _ => throw new IllegalArgumentException(s"No conversion available for ${code}")
         }
+    }
+
+    implicit def stringToCurrency(money: String): Currency = {
+        val Array(code: String, value: String) = money.split("\\s")
+        val amount = value.toDouble
+        Currency(code, amount)
     }
 }
 class Currency(code: String, amount: Double, inUSD: Double) {
@@ -47,4 +53,13 @@ object CurrencyRunner extends App {
 
     val cad2 = createCAD(25)
     println(cad2)
+
+    val usd3: Currency = "USD 50"
+    println(usd3)
+
+    val nzd3: Currency = "NZD 50"
+    println(nzd3)
+
+    val cad3: Currency = "CAD 50"
+    println(cad3)
 }
