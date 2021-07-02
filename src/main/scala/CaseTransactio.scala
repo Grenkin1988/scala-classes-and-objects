@@ -19,4 +19,9 @@ object TransactionRunner extends App {
 
     val t4 = t1.copy(name = "T4", amount = 24.66)
     println(t4)
+
+    val amount = t3 match {
+        case Transactio(_, amount, _, _) => amount
+    }
+    println(amount)
 }
