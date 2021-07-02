@@ -87,11 +87,3 @@ object AccountRunner extends App{
     psb2.setBalance(999)
     println(psb2.getBalance)
 }
-
-class C1
-class C2
-class C3
-
-trait T1
-trait T2
-trait T3

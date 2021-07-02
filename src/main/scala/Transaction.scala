@@ -3,7 +3,7 @@ trait User {
     def getLast: String
 }
 
-trait Transactio {
+trait TransactioOld {
     this: User =>
     def printAmountWithTransaction(amount: Double) = {
         val fullCustomerName = this.getFirst + " " + this.getLast
@@ -12,12 +12,12 @@ trait Transactio {
     }
 }
 
-class DebitTransaction(val first: String, val last: String) extends User with Transactio {
+class DebitTransaction(val first: String, val last: String) extends User with TransactioOld {
   override def getFirst: String = first
   override def getLast: String = last
 }
 
-object TransactionRunner extends App {
+object TransactionOldRunner extends App {
     val transaction = new DebitTransaction("Tony", "Stark")
     transaction.printAmountWithTransaction(1000)
 }
