@@ -4,6 +4,10 @@ object Currency {
 
     // With apply no need for new key word for object creation
     def apply(code: String, amount: Double) = new Currency(code, amount)
+
+    def createUSD(amount: Double) = apply("USD", amount)
+    def createNZD(amount: Double) = apply("NZD", amount)
+    def createCAD(amount: Double) = apply("CAD", amount)
 }
 class Currency(code: String, amount: Double) {
     import Currency.conversionTable
@@ -32,4 +36,15 @@ object CurrencyRunner extends App {
 
     val cad1 = Currency("CAD", 100.12)
     println(cad1)
+
+    import Currency._
+
+    val usd2 = createUSD(25)
+    println(usd2)
+
+    val nzd2 = createNZD(25)
+    println(nzd2)
+
+    val cad2 = createCAD(25)
+    println(cad2)
 }
