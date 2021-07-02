@@ -1,18 +1,23 @@
 import java.time.LocalDateTime
 
-case class Transactio(name: String, amount: Double, kind: String, when: LocalDateTime)
+sealed trait Kind
+case object Debit extends Kind
+case object Credit extends Kind
+case object Refund extends Kind
+
+case class Transactio(name: String, amount: Double, kind: Kind, when: LocalDateTime)
 
 object TransactionRunner extends App {
-    val t1 = Transactio("T1", 12.22, "debit", LocalDateTime.now)
+    val t1 = Transactio("T1", 12.22, Debit, LocalDateTime.now)
 
     println(t1.toString())
 
-    val t2 = Transactio("T2", 12.22, "debit", LocalDateTime.now)
+    val t2 = Transactio("T2", 12.22, Credit, LocalDateTime.now)
     println(t1 == t2)
     println(t1.equals(t2))
     println(t1 eq t2)
 
-    val t3 = Transactio("T1", 12.22, "debit", t1.when)
+    val t3 = Transactio("T1", 12.22, Debit, t1.when)
     println(t1 == t3)
     println(t1.equals(t3))
     println(t1 eq t3)
@@ -24,4 +29,12 @@ object TransactionRunner extends App {
         case Transactio(_, amount, _, _) => amount
     }
     println(amount)
+
+    def getMessage(kind: Kind) = kind match {
+        case Debit => "Debit Transaction"
+        case Credit => "Credit Transaction"
+        case Refund => "Refund Transaction"
+    }
+
+    println(getMessage(t4.kind))
 }
