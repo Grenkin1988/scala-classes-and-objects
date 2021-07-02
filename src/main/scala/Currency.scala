@@ -1,6 +1,9 @@
-class Currency(code: String, amount: Double) {
+object Currency {
     private val conversionTable: Map[String, Double] =
         Map("CAD" -> 1 / 1.3, "NZD" -> 1 / 1.5)
+}
+class Currency(code: String, amount: Double) {
+    import Currency.conversionTable
     private val _code = code
     private val _amount = amount
     private val _inUSD: Double = getCostInUsd
